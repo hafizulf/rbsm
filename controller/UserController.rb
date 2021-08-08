@@ -1,4 +1,4 @@
-require './model/user'
+require_relative "../model/user"
 
 class UserController
 
