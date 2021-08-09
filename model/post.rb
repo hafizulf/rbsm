@@ -26,7 +26,7 @@ class Post
 
     def self.find_all_post_with_certain_tag(tag)
         client = create_db_client
-        rawData = client.query("SELECT id, message, find_in_set('#{tag}', tags) FROM posts WHERE find_in_set('#{tag}', tags) != 0")
+        rawData = client.query("SELECT id, message FROM posts WHERE tags LIKE '%,#{tag},%' ");
         rawData.each
     end
 end

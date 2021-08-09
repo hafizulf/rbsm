@@ -20,7 +20,8 @@ class PostController
         arr = msg.select { |word| word.start_with?('#') }.uniq
         if arr.size > 0
             arr.each {|a| a[0] = ''}
-            return arr.join(", ")
+            join = arr.join(",")
+            return ",#{join},"
         else
             return ''
         end
