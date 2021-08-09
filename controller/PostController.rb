@@ -25,4 +25,8 @@ class PostController
             return ''
         end
     end
+
+    def post_with_certain_tag(tag)
+        Post.find_all_post_with_certain_tag(tag)
+    end
 end
