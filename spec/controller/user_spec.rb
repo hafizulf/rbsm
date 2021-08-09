@@ -5,6 +5,13 @@ RSpec.describe UserController do
         @controller =  UserController.new
     end
 
+    it 'should call find_all method' do
+        users = double
+        expect(User).to receive(:find_all).and_return(users)
+
+        @controller.find_all
+    end
+
     it 'should call save method' do
         stub = double
 
@@ -14,4 +21,6 @@ RSpec.describe UserController do
 
         @controller.save([])
     end
+
+
 end
