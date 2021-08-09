@@ -7,11 +7,7 @@ class UserController
     end
 
     def save(params)
-        user = User.new({
-            username: params['username'],
-            email: params['email'],
-            bio_desc: params['bio_desc']
-        })
+        user = User.new(params)
         user.save
     end
 
