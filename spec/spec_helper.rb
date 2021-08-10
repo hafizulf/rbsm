@@ -15,6 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require './test_helper'
 
+require './model/post_spec'
 require './controller/post_spec'
 require './model/user_spec'
 require './controller/user_spec'

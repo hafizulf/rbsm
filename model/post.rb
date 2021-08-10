@@ -12,7 +12,20 @@ class Post
         return chars_length_err unless message_valid?
 
         client = create_db_client
-        client.query("INSERT INTO posts(message, tags) VALUES ('#{message}', '#{tags}') ")
+        client.query("INSERT INTO posts(message) VALUES ('#{message}') ")
+
+        tags = get_tags(@message)
+        post_id = client.last_id
+        tags.each do |tag|
+            client.query("INSERT INTO post_tags(post_id, tag) VALUES ('#{post_id}', '#{tag}') ")
+        end
+
+        true
+    end
+
+    def get_tags(param)
+        param = param.downcase.split(' ')
+        arr = param.select { |word| word.start_with?('#') }.uniq
     end
 
     def message_valid?
