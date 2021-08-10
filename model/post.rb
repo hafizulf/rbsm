@@ -26,6 +26,7 @@ class Post
     def get_tags(param)
         param = param.downcase.split(' ')
         arr = param.select { |word| word.start_with?('#') }.uniq
+        arr.map {|a| a.delete_prefix('#')}
     end
 
     def message_valid?
