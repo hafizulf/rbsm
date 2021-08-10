@@ -7,7 +7,7 @@ class PostController
         post.save
     end
 
-    def post_with_certain_tag(tag)
+    def find_posts_with_certain_tag(tag)
         Post.find_all_post_with_certain_tag(tag)
     end
 end

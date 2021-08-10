@@ -40,7 +40,7 @@ class Post
 
     def self.find_all_post_with_certain_tag(tag)
         client = create_db_client
-        rawData = client.query("SELECT id, message FROM posts WHERE tags LIKE '%,#{tag},%' ");
+        rawData = client.query("SELECT id, message FROM posts LEFT JOIN post_tags ON posts.id = post_tags.post_id WHERE tag = '#{tag}' ");
         rawData.each
     end
 end

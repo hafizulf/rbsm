@@ -61,4 +61,19 @@ RSpec.describe Post do
             end
         end
     end
+
+    describe "get posts" do
+        context "when give param for certain tag" do
+            it 'should return all related data' do
+                mock = "SELECT id, message FROM posts LEFT JOIN post_tags ON posts.id = post_tags.post_id WHERE tag = 'new' "
+                stub = []
+
+                expect(@client).to receive(:query).with(mock).and_return(stub)
+
+                post = Post.find_all_post_with_certain_tag('new')
+
+                expect(post).to be_an Enumerator
+            end
+        end
+    end
 end

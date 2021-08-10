@@ -18,4 +18,15 @@ RSpec.describe PostController do
             end
         end
     end
+
+    describe "get posts" do
+        context "when give param for certain tag" do
+            it 'should call the method' do
+                stub = double
+                expect(Post).to receive(:find_all_post_with_certain_tag).and_return(stub)
+
+                @controller.find_posts_with_certain_tag("yabb")
+            end
+        end
+    end
 end
