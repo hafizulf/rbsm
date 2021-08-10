@@ -33,6 +33,17 @@ RSpec.describe User do
             end
         end
 
+        context "when given invalid param" do
+            it "should raise a runtime error" do
+                user = User.new(email: "tes")
+
+                allow(@client).to receive(:query).with(user)
+
+                expect { user.save }.to raise_error(RuntimeError)
+            end
+        end
+    end
+
         describe "check valid args" do
             context "when given valid param" do
                 it "should return true" do
@@ -47,5 +58,4 @@ RSpec.describe User do
                 end
             end
         end
-    end
 end

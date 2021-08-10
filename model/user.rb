@@ -25,7 +25,7 @@ class User
     end
 
     def save
-        return false unless valid?
+        return bad_request unless valid?
 
         client = create_db_client
         client.query("INSERT INTO users(username, email, bio_desc) VALUES ('#{username}', '#{email}', '#{bio_desc}') ")
@@ -34,5 +34,9 @@ class User
     def valid?
         return false if @username.nil?
         true
+    end
+
+    def bad_request
+        raise "invalid param"
     end
 end
