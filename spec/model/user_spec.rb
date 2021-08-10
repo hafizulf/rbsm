@@ -15,10 +15,21 @@ RSpec.describe User do
 
                 expect(@client).to receive(:query).with(mock).and_return(stub)
 
-                @user = User.find_all
+                user = User.find_all
 
-                # expect(@user).to eq(1)
-                expect(@user).to be_an Enumerator
+                expect(user).to be_an Enumerator
+            end
+        end
+    end
+
+    describe "save user" do
+        context "when given valids params" do
+            it "should save user data" do
+                mock = "INSERT INTO users(username, email, bio_desc) VALUES ('User', 'user@exp.com', 'Hello!') "
+
+                allow(@client).to receive(:query).with(mock)
+
+                @user.save
             end
         end
     end
