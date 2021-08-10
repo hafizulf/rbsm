@@ -32,5 +32,20 @@ RSpec.describe User do
                 @user.save
             end
         end
+
+        describe "check valid args" do
+            context "when given valid param" do
+                it "should return true" do
+                    user = User.new(username: "tes")
+                    expect(user.valid?).to eq(true)
+                end
+            end
+            context "when given invalid param" do
+                it "should return false" do
+                    user = User.new(email: "tes")
+                    expect(user.valid?).to eq(false)
+                end
+            end
+        end
     end
 end
