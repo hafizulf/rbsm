@@ -9,6 +9,9 @@ class Comment
     end
 
     def save
-        return "ok"
+        client = create_db_client
+        client.query("INSERT INTO comments(post_id, comment) VALUES('#{post_id}', '#{comment}') ")
+
+        true
     end
 end
