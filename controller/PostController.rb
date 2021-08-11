@@ -7,7 +7,11 @@ class PostController
         post.save
     end
 
-    def find_posts_with_certain_tag(tag)
+    def post_with_certain_tag(tag)
         Post.find_all_post_with_certain_tag(tag)
+    end
+
+    def post_with_most_posted_tag
+        Post.find_all_post_with_most_posted_tag
     end
 end

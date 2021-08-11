@@ -3,16 +3,15 @@ require_relative "../../controller/PostController"
 RSpec.describe PostController do
     before(:each) do
         @controller = PostController.new
+        @stub = double
     end
 
     describe "saving post" do
         context "save" do
             it "should call save method" do
-                stub = double
+                allow(Post).to receive(:new).with([]).and_return(@stub)
 
-                allow(Post).to receive(:new).with([]).and_return(stub)
-
-                expect(stub).to receive(:save)
+                expect(@stub).to receive(:save)
 
                 @controller.save([])
             end
@@ -22,11 +21,16 @@ RSpec.describe PostController do
     describe "get posts" do
         context "when give param for certain tag" do
             it 'should call the method' do
-                stub = double
-                expect(Post).to receive(:find_all_post_with_certain_tag).and_return(stub)
+                expect(Post).to receive(:find_all_post_with_certain_tag).and_return(@stub)
 
-                @controller.find_posts_with_certain_tag("yabb")
+                @controller.post_with_certain_tag("yabb")
             end
+        end
+    end
+
+    context "get trending hashtag" do
+        it "shoull call the method" do
+            expect(@controller.post_with_most_posted_tag).to eq("ok")
         end
     end
 end
