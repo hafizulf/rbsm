@@ -76,4 +76,16 @@ RSpec.describe Post do
             end
         end
     end
+
+    describe "get trending hashtag" do
+        it "return 5 most posted tag" do
+            mock = "SELECT tag, COUNT(tag) AS `Total Posted` FROM posts JOIN post_tags ON posts.id = post_tags.post_id WHERE created_at >= NOW() - INTERVAL 1 DAY GROUP BY tag ORDER BY `Total Posted` DESC LIMIT 5"
+            stub = []
+
+            expect(@client).to receive(:query).with(mock).and_return(stub)
+
+            post = Post.find_all_post_with_most_posted_tag
+            expect(post).to be_an Enumerator
+        end
+    end
 end

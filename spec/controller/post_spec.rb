@@ -28,7 +28,7 @@ RSpec.describe PostController do
         end
     end
 
-    context "get trending hashtag" do
+    describe "get trending hashtag" do
         it "should call the method" do
             expect(Post).to receive(:find_all_post_with_most_posted_tag).and_return(@stub)
 
