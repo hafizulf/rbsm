@@ -30,12 +30,13 @@ class Post
     end
 
     def message_valid?
+        return false if @message.nil?
         return false unless @message.length <= 1000
         true
     end
 
     def chars_length_err
-        raise "You out of maximum characters length, try below 1000."
+        raise "You need to add some message to post or your message out of maximum characters length, try below 1000."
     end
 
     def self.find_all_post_with_certain_tag(tag)

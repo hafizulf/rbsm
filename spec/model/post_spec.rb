@@ -36,6 +36,20 @@ RSpec.describe Post do
                 expect { post.save }.to raise_error(RuntimeError)
             end
         end
+
+        context "when message is nil" do
+            it "should return false" do
+                model = Post.new({})
+                expect(model.message_valid?).to eq(false)
+            end
+        end
+
+        context "when message not nil" do
+            it "should return true" do
+                model = Post.new({message: "new message"})
+                expect(model.message_valid?).to eq(true)
+            end
+        end
     end
 
     describe "saving post" do
