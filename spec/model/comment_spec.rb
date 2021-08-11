@@ -9,7 +9,7 @@ RSpec.describe Comment do
 
     describe "save comment" do
         context "saving comment" do
-            it "should return ok" do
+            it "should return true" do
                 mock = "INSERT INTO comments(post_id, comment) VALUES('22', 'new comment #new') "
                 mock2 = "INSERT INTO comment_tags(comment_id, tag) VALUES('22', 'new') "
 
@@ -20,6 +20,21 @@ RSpec.describe Comment do
                 expect(@client).to receive(:query).with(mock2)
 
                 expect(@comment.save).to eq(true)
+            end
+        end
+    end
+
+    describe "param validation" do
+        context "comment nil" do
+            it "should return false" do
+                model = Comment.new(post_id: 22)
+                expect(model.save).to eq(false)
+            end
+        end
+        context "comment not nil" do
+            it "should return true" do
+                model = Comment.new(comment: "new comment #new")
+                expect(model.valid?).to eq(true)
             end
         end
     end

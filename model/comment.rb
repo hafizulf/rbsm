@@ -9,6 +9,8 @@ class Comment
     end
 
     def save
+        return false unless valid?
+
         client = create_db_client
         client.query("INSERT INTO comments(post_id, comment) VALUES('#{post_id}', '#{comment}') ")
 
@@ -26,5 +28,10 @@ class Comment
         param = param.downcase.split(' ')
         arr = param.select { |word| word.start_with?('#') }.uniq
         arr.map {|a| a.delete_prefix('#')}
+    end
+
+    def valid?
+        return false if comment.nil?
+        true
     end
 end
