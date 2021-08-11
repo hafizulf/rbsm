@@ -45,6 +45,8 @@ class Post
     end
 
     def self.find_all_post_with_most_posted_tag
-        return "ok"
+        client = create_db_client
+        rawData = client.query("SELECT tag, COUNT(tag) AS `Total Posted` FROM posts JOIN post_tags ON posts.id = post_tags.post_id WHERE created_at >= NOW() - INTERVAL 1 DAY GROUP BY tag ORDER BY `Total Posted` DESC LIMIT 2")
+        rawData.each
     end
 end
