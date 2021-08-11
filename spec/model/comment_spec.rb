@@ -25,16 +25,40 @@ RSpec.describe Comment do
     end
 
     describe "param validation" do
-        context "comment nil" do
+        context "params nil" do
             it "should return false" do
                 model = Comment.new(post_id: 22)
                 expect(model.save).to eq(false)
             end
         end
-        context "comment not nil" do
+        context "params not nil" do
             it "should return true" do
-                model = Comment.new(comment: "new comment #new")
+                model = Comment.new(post_id: 22, comment: "new comment #new")
                 expect(model.valid?).to eq(true)
+            end
+        end
+        context "comment more than 1000 chars" do
+            it "should return false" do
+                comment = "a"*1009
+                model = Comment.new(comment: comment)
+                expect(model.comment_valid?).to eq(false)
+            end
+        end
+        context "comment below 1000 chars" do
+            it "should return false" do
+                comment = "a"*999
+                model = Comment.new(comment: comment)
+                expect(model.comment_valid?).to eq(true)
+            end
+        end
+        context "when comment_valid? called" do
+            it "should raise a runtime error" do
+                msg = "a"*1001
+                comment = Comment.new(post_id: 22, comment: msg)
+
+                allow(Comment).to receive(:new).with(comment)
+
+                expect { comment.save }.to raise_error(RuntimeError)
             end
         end
     end

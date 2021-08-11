@@ -10,6 +10,7 @@ class Comment
 
     def save
         return false unless valid?
+        return chars_length_err unless comment_valid?
 
         client = create_db_client
         client.query("INSERT INTO comments(post_id, comment) VALUES('#{post_id}', '#{comment}') ")
@@ -31,7 +32,17 @@ class Comment
     end
 
     def valid?
+        return false if post_id.nil?
         return false if comment.nil?
         true
+    end
+
+    def comment_valid?
+        return false unless comment.length <= 1000
+        true
+    end
+
+    def chars_length_err
+        raise "You out of maximum characters length, try below 1000."
     end
 end
