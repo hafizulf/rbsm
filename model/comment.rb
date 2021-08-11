@@ -15,11 +15,10 @@ class Comment
         client = create_db_client
         client.query("INSERT INTO comments(post_id, comment) VALUES('#{post_id}', '#{comment}') ")
 
-        comment_id = client.last_id
         tags = get_tags(@comment)
 
         tags.each do |tag|
-            client.query("INSERT INTO comment_tags(comment_id, tag) VALUES('#{comment_id}', '#{tag}') ")
+            client.query("INSERT INTO tags(post_id, tag) VALUES('#{post_id}', '#{tag}') ")
         end
 
         true

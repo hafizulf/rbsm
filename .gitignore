@@ -56,3 +56,4 @@ build-iPhoneSimulator/
 # .rubocop-https?--*
 .env
 views
+test.rb

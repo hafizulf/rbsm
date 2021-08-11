@@ -17,7 +17,7 @@ class Post
         tags = get_tags(@message)
         post_id = client.last_id
         tags.each do |tag|
-            client.query("INSERT INTO post_tags(post_id, tag) VALUES ('#{post_id}', '#{tag}') ")
+            client.query("INSERT INTO tags(post_id, tag) VALUES ('#{post_id}', '#{tag}') ")
         end
 
         true
@@ -41,13 +41,13 @@ class Post
 
     def self.find_all_post_with_certain_tag(tag)
         client = create_db_client
-        rawData = client.query("SELECT id, message FROM posts LEFT JOIN post_tags ON posts.id = post_tags.post_id WHERE tag = '#{tag}' ");
+        rawData = client.query("SELECT id, message, tag FROM posts LEFT JOIN tags ON posts.id = tags.post_id WHERE tag = '#{tag}' ");
         rawData.each
     end
 
     def self.find_all_post_with_most_posted_tag
         client = create_db_client
-        rawData = client.query("SELECT tag, COUNT(tag) AS `Total Posted` FROM posts JOIN post_tags ON posts.id = post_tags.post_id WHERE created_at >= NOW() - INTERVAL 1 DAY GROUP BY tag ORDER BY `Total Posted` DESC LIMIT 5")
+        rawData = client.query("SELECT tag, COUNT(tag) AS `Total Posted` FROM tags LEFT JOIN posts ON tags.post_id = posts.id LEFT JOIN comments ON comments.post_id = posts.id WHERE created_at >= NOW() - INTERVAL 1 DAY GROUP BY tag ORDER BY `Total Posted` DESC LIMIT 5")
         rawData.each
     end
 end

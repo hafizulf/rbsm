@@ -56,7 +56,7 @@ RSpec.describe Post do
         context "save post and tag" do
             it "should return true" do
                 mock = "INSERT INTO posts(message) VALUES ('new post #new') "
-                mock2 = "INSERT INTO post_tags(post_id, tag) VALUES ('10', 'new') "
+                mock2 = "INSERT INTO tags(post_id, tag) VALUES ('10', 'new') "
 
                 allow(@client).to receive(:new).and_return(message: 'new post #new')
                 expect(@client).to receive(:query).with(mock)
@@ -79,7 +79,7 @@ RSpec.describe Post do
     describe "get posts" do
         context "when give param for certain tag" do
             it 'should return all related data' do
-                mock = "SELECT id, message FROM posts LEFT JOIN post_tags ON posts.id = post_tags.post_id WHERE tag = 'new' "
+                mock = "SELECT id, message, tag FROM posts LEFT JOIN tags ON posts.id = tags.post_id WHERE tag = 'new' "
                 stub = []
 
                 expect(@client).to receive(:query).with(mock).and_return(stub)
@@ -93,7 +93,7 @@ RSpec.describe Post do
 
     describe "get trending hashtag" do
         it "return 5 most posted tag" do
-            mock = "SELECT tag, COUNT(tag) AS `Total Posted` FROM posts JOIN post_tags ON posts.id = post_tags.post_id WHERE created_at >= NOW() - INTERVAL 1 DAY GROUP BY tag ORDER BY `Total Posted` DESC LIMIT 5"
+            mock = "SELECT tag, COUNT(tag) AS `Total Posted` FROM tags LEFT JOIN posts ON tags.post_id = posts.id LEFT JOIN comments ON comments.post_id = posts.id WHERE created_at >= NOW() - INTERVAL 1 DAY GROUP BY tag ORDER BY `Total Posted` DESC LIMIT 5"
             stub = []
 
             expect(@client).to receive(:query).with(mock).and_return(stub)
