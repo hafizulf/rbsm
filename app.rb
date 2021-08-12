@@ -1,6 +1,3 @@
 require 'sinatra'
 require 'json'
-require './routes/user'
-require './routes/post'
-require './routes/comment'
-require './routes/test'
+require './config/routes'

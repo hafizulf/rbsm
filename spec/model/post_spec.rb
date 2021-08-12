@@ -55,7 +55,7 @@ RSpec.describe Post do
     describe "saving post" do
         context "save post and tag" do
             it "should return true" do
-                mock = "INSERT INTO posts(message) VALUES ('new post #new') "
+                mock = "INSERT INTO posts(message, attachment) VALUES ('new post #new', '') "
                 mock2 = "INSERT INTO tags(post_id, tag) VALUES ('10', 'new') "
 
                 allow(@client).to receive(:new).and_return(message: 'new post #new')
@@ -64,7 +64,7 @@ RSpec.describe Post do
                 allow(@client).to receive(:last_id).and_return(10)
                 expect(@client).to receive(:query).with(mock2)
 
-                expect(@post.save).to eq(true)
+                expect(@post.save).to eq("Post created successfully")
             end
         end
         context "get tag" do
