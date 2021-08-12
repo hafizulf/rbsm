@@ -29,7 +29,7 @@ RSpec.describe User do
 
                 allow(@client).to receive(:query).with(mock)
 
-                @user.save
+                expect(@user.save).to eq("User successfully saved")
             end
         end
 

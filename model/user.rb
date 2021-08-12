@@ -29,6 +29,8 @@ class User
 
         client = create_db_client
         client.query("INSERT INTO users(username, email, bio_desc) VALUES ('#{username}', '#{email}', '#{bio_desc}') ")
+
+        return "User successfully saved"
     end
 
     def valid?

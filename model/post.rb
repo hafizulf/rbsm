@@ -1,18 +1,22 @@
 require_relative '../db/conn'
+require './helper/file_helper'
 
 class Post
-    attr_accessor :message, :tags, :tag
+    attr_accessor :message, :file
 
     def initialize(params)
         @message = params[:message]
-        @tags = params[:tags]
+        @file = params[:file]
     end
 
     def save
         return chars_length_err unless message_valid?
 
+        file = AttachmentHelper.new
+        attachment = file.get_file(@file)
+
         client = create_db_client
-        client.query("INSERT INTO posts(message) VALUES ('#{message}') ")
+        client.query("INSERT INTO posts(message, attachment) VALUES ('#{message}', '#{attachment}') ")
 
         tags = get_tags(@message)
         post_id = client.last_id
@@ -20,7 +24,7 @@ class Post
             client.query("INSERT INTO tags(post_id, tag) VALUES ('#{post_id}', '#{tag}') ")
         end
 
-        true
+        return "Post created successfully"
     end
 
     def get_tags(param)

@@ -10,7 +10,7 @@ RSpec.describe Comment do
     describe "save comment" do
         context "saving comment" do
             it "should return true" do
-                mock = "INSERT INTO comments(post_id, comment) VALUES('22', 'new comment #new') "
+                mock = "INSERT INTO comments(post_id, comment, attachment) VALUES('22', 'new comment #new', '') "
                 mock2 = "INSERT INTO tags(post_id, tag) VALUES('22', 'new') "
 
                 allow(@client).to receive(:new).and_return(post_id: 22, comment: 'new post #new')
@@ -19,7 +19,7 @@ RSpec.describe Comment do
                 allow(@client).to receive(:last_id).and_return(22)
                 expect(@client).to receive(:query).with(mock2)
 
-                expect(@comment.save).to eq(true)
+                expect(@comment.save).to eq("Successfully commented")
             end
         end
     end
