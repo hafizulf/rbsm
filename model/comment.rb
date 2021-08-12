@@ -1,19 +1,24 @@
 require_relative '../db/conn'
+require './helper/file_helper'
 
 class Comment
-    attr_accessor :post_id, :comment
+    attr_accessor :post_id, :comment, :file
 
     def initialize(params)
         @post_id = params[:post_id]
         @comment = params[:comment]
+        @file = params[:file]
     end
 
     def save
         return false unless valid?
         return chars_length_err unless comment_valid?
 
+        file = AttachmentHelper.new
+        attachment = file.get_file(@file)
+
         client = create_db_client
-        client.query("INSERT INTO comments(post_id, comment) VALUES('#{post_id}', '#{comment}') ")
+        client.query("INSERT INTO comments(post_id, comment, attachment) VALUES('#{post_id}', '#{comment}', '#{attachment}') ")
 
         tags = get_tags(@comment)
 
@@ -21,7 +26,7 @@ class Comment
             client.query("INSERT INTO tags(post_id, tag) VALUES('#{post_id}', '#{tag}') ")
         end
 
-        true
+        return "Successfully commented"
     end
 
     def get_tags(param)

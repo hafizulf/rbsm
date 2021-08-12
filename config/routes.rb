@@ -10,7 +10,7 @@ end
 
 post '/user' do
     controller = UserController.new
-    controller.save(params)
+    controller.save(params).to_json
 end
 
 # post
@@ -32,5 +32,5 @@ end
 # comment
 post '/comment' do
     controller = CommentController.new
-    controller.save_comment(params)
+    controller.save_comment(params).to_json
 end
