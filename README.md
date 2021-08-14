@@ -1,19 +1,5 @@
-# ruby-social-media
+# What is RBSM ?
 
-A simple social media app using Ruby that created for final project in generasi gigih backend path
+## Description
 
-## Problem Description
-
-```
-Problem:
-1. User want to save username, email and bio description
-2. User want to create a post with limitation of text is 1000 characters, and can attach a file and use one or many hashtag identify with '#' => #example
-3. User want to find a all post with certain hashtag
-4. User want to get list of trending hashtags from the past 24 hours
-
-Solution
-1. Create a method to save user data (username, email, bio description) into database
-2. Create a method to save created post into database
-3. Create a method for user to give certain hashtag as a param then generate all post data from database
-4. Create a method for user to generate most tags posted in the last 24 hours (1 day)
-```
+RBSM is a simple Ruby-based social media application. This app is used only on one small environment so no authentication is required. Where the user can input data, create a new post with a limit of 1000 characters and a maximum of one attachment. Users can also make comments, check some posts that contain certain hashtags and users can also see trending hashtags for the past 24 hours.
