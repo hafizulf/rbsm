@@ -1,19 +1,19 @@
 require_relative '../db/conn'
-require './helper/file_helper'
+require './helper/attachment_helper'
 
 class Post
     attr_accessor :message, :file
 
     def initialize(params)
         @message = params[:message]
-        @file = params[:file]
+        @file = params[:file] # attr: filename, tempfile
+        @attachment = AttachmentHelper.new
     end
 
     def save
         return chars_length_err unless message_valid?
 
-        file = AttachmentHelper.new
-        attachment = file.get_file(@file)
+        attachment = @attachment.get_file(@file, "posts")
 
         client = create_db_client
         client.query("INSERT INTO posts(message, attachment) VALUES ('#{message}', '#{attachment}') ")

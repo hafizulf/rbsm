@@ -4,7 +4,46 @@ RSpec.describe Post do
     before(:each) do
         @client = double
         @post = Post.new(id: 10, message: "new post #new")
+        @attachment = AttachmentHelper.new
         allow(Mysql2::Client).to receive(:new).and_return(@client)
+    end
+
+    describe "attach a file" do
+        context "when file is nil" do
+            it "should return '' " do
+                @attachment.get_file({})
+            end
+        end
+
+        context "file validation failed" do
+            it "raises" do
+                f_mock = double
+                file_mock =  double
+
+                attachment = {
+                    filename: "file_name.png",
+                    tempfile: file_mock
+                }
+
+                expect{@attachment.get_file(attachment)}.to raise_error(RuntimeError)
+            end
+        end
+
+        context "when file validated" do
+                it "should return filename" do
+                    file_mock =  double
+
+                    attachment = {
+                        filename: "file_name.png",
+                        tempfile: file_mock
+                    }
+
+                    @attachment.get_file(attachment)
+                end
+
+                it "should saved in local" do
+                end
+        end
     end
 
     describe "post validation" do
@@ -54,7 +93,7 @@ RSpec.describe Post do
 
     describe "saving post" do
         context "save post and tag" do
-            it "should return true" do
+            it "should return success message" do
                 mock = "INSERT INTO posts(message, attachment) VALUES ('new post #new', '') "
                 mock2 = "INSERT INTO tags(post_id, tag) VALUES ('10', 'new') "
 
