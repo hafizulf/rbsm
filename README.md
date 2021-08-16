@@ -39,21 +39,46 @@ bundle -v
 bundle install
 ```
 
-4. **Import database**, make sure mysql is running :
+4. **Import database** :
 
 ```sh
 cd db_schema
+# check your mysql status
+service mysql status
+# if stopped, run it first
+service mysql start
+# begin import db
 mysql -u username -p < database.sql
 [Enter your password]
 ```
 
-5. Run the app with this command :
+5. Setup environment. You can write it manually in db/conn.rb, or create a new `.env` file:
+
 ```sh
 cd ..
+nano .env
+# paste and change these lines
+export DB_HOST=127.0.0.1
+export DB_NAME=social_media
+export DB_USER=your-username
+export DB_PASS=your-password
+# save and exit
+```
+
+6. Run `.env` :
+
+```sh
+source .env
+```
+
+7. Run the app with this command :
+
+```sh
 ruby app.rb
 ```
 
-6. Access the App from your browser :
-```
+8. Access the App from your browser :
+
+```sh
 http://localhost:4567
 ```
