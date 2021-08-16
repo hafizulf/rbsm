@@ -11,13 +11,32 @@ RSpec.describe Post do
     describe "attach a file" do
         context "when file is nil" do
             it "should return '' " do
-                @attachment.get_file({})
+                attachment = nil
+
+                expected = ''
+                actual = @attachment.get_file(attachment, "posts")
+
+                expect(actual).to eq(expected)
             end
         end
 
         context "file validation failed" do
             it "raises" do
-                f_mock = double
+                file_mock =  double
+
+                attachment = {
+                    filename: "video.mkv",
+                    tempfile: file_mock
+                }
+
+                allow(@attachment).to receive(:get_mime).with(file_mock)
+
+                expect{@attachment.get_file(attachment, "posts")}.to raise_error(RuntimeError)
+            end
+        end
+
+        context "when file validated" do
+            it "should return a filename" do
                 file_mock =  double
 
                 attachment = {
@@ -25,24 +44,17 @@ RSpec.describe Post do
                     tempfile: file_mock
                 }
 
-                expect{@attachment.get_file(attachment)}.to raise_error(RuntimeError)
+                allow(@attachment).to receive(:validate_file?).and_return(true)
+                allow(@attachment).to receive(:upload_file)
+
+                allow(SecureRandom).to receive(:urlsafe_base64).and_return("")
+
+                file_name = attachment[:filename]
+                expected = ".#{file_name}"
+                actual = @attachment.get_file(attachment, "posts")
+
+                expect(actual).to eq(expected)
             end
-        end
-
-        context "when file validated" do
-                it "should return filename" do
-                    file_mock =  double
-
-                    attachment = {
-                        filename: "file_name.png",
-                        tempfile: file_mock
-                    }
-
-                    @attachment.get_file(attachment)
-                end
-
-                it "should saved in local" do
-                end
         end
     end
 

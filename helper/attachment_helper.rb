@@ -9,19 +9,20 @@ class AttachmentHelper
         file_name = file[:filename]
         file = file[:tempfile]
 
-        return file_err unless validate_file(file)
+        raise "File Not allowed" unless validate_file?(file)
 
-        filename = "#{SecureRandom.urlsafe_base64}.#{file_name}"
+        filename = generate_filename(file_name)
+
         upload_file(file, filename, type)
 
         return filename
     end
 
-    def file_err
-        raise "File Not allowed"
+    def generate_filename(filename)
+        "#{SecureRandom.urlsafe_base64}.#{filename}"
     end
 
-    def validate_file(file)
+    def validate_file?(file)
         mime_types = ['image/gif', 'image/jpg', 'image/png', 'video/mp4', 'application/pdf', 'application/msword', 'application/vnd.ms-excel']
 
         mime = get_mime(file)
@@ -32,7 +33,7 @@ class AttachmentHelper
 
     def get_mime(file)
         ext = File.extname(file)
-        mime = Rack::Mime.mime_type(ext)
+        Rack::Mime.mime_type(ext)
     end
 
     def upload_file(file, filename, type)
