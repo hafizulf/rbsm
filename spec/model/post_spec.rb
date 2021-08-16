@@ -55,6 +55,14 @@ RSpec.describe Post do
 
                 expect(actual).to eq(expected)
             end
+
+            it "validate_file? == true" do
+                file_mock =  double
+
+                allow(@attachment).to receive(:get_mime).with(file_mock).and_return("image/png")
+
+                expect(@attachment.validate_file?(file_mock)).to eq(true)
+            end
         end
     end
 
