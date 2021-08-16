@@ -4,75 +4,13 @@ RSpec.describe Post do
     before(:each) do
         @client = double
         @post = Post.new(id: 10, message: "new post #new")
-        @attachment = AttachmentHelper.new
         allow(Mysql2::Client).to receive(:new).and_return(@client)
-    end
-
-    describe "attach a file" do
-        context "when file is nil" do
-            it "should return '' " do
-                attachment = nil
-
-                expected = ''
-                actual = @attachment.get_file(attachment, "posts")
-
-                expect(actual).to eq(expected)
-            end
-        end
-
-        context "file validation failed" do
-            it "raises" do
-                file_mock =  double
-
-                attachment = {
-                    filename: "video.mkv",
-                    tempfile: file_mock
-                }
-
-                allow(@attachment).to receive(:get_mime).with(file_mock)
-
-                expect{@attachment.get_file(attachment, "posts")}.to raise_error(RuntimeError)
-            end
-        end
-
-        context "when file validated" do
-            it "should return a filename" do
-                file_mock =  double
-
-                attachment = {
-                    filename: "file_name.png",
-                    tempfile: file_mock
-                }
-
-                allow(@attachment).to receive(:validate_file?).and_return(true)
-                allow(@attachment).to receive(:upload_file)
-
-                allow(SecureRandom).to receive(:urlsafe_base64).and_return("")
-
-                file_name = attachment[:filename]
-                expected = ".#{file_name}"
-                actual = @attachment.get_file(attachment, "posts")
-
-                expect(actual).to eq(expected)
-            end
-
-            it "validate_file? == true" do
-                file_mock =  double
-
-                allow(@attachment).to receive(:get_mime).with(file_mock).and_return("image/png")
-
-                expect(@attachment.validate_file?(file_mock)).to eq(true)
-            end
-        end
     end
 
     describe "post validation" do
         context "when length of message meets requirement" do
             it "should return true" do
-                msg = "a"*1000
-                post = Post.new(message: msg)
-
-                expect(post.message_valid?).to eq(true)
+                expect(@post.message_valid?).to eq(true)
             end
         end
 
@@ -80,7 +18,6 @@ RSpec.describe Post do
             it "should return false" do
                 msg = "a"*1001
                 post = Post.new(message: msg)
-
                 expect(post.message_valid?).to eq(false)
             end
         end
@@ -89,9 +26,6 @@ RSpec.describe Post do
             it "should raise a runtime error" do
                 msg = "a"*1001
                 post = Post.new(message: msg)
-
-                allow(Post).to receive(:new).with(post)
-
                 expect { post.save }.to raise_error(RuntimeError)
             end
         end
@@ -105,8 +39,7 @@ RSpec.describe Post do
 
         context "when message not nil" do
             it "should return true" do
-                model = Post.new({message: "new message"})
-                expect(model.message_valid?).to eq(true)
+                expect(@post.message_valid?).to eq(true)
             end
         end
     end
@@ -128,8 +61,6 @@ RSpec.describe Post do
         end
         context "get tag" do
             it "should return a tag in array if exist" do
-                allow(@client).to receive(:new).and_return(message: 'new post #new')
-
                 expect(@post.get_tags('new post #new')).to eq(["new"])
             end
         end
@@ -139,12 +70,15 @@ RSpec.describe Post do
         context "when give param for certain tag" do
             it 'should return all related data' do
                 mock = "SELECT id, message, tag FROM posts LEFT JOIN tags ON posts.id = tags.post_id WHERE tag = 'new' "
-                stub = []
+                stub = [{
+                    id: 10,
+                    message: "new post #new",
+                    tag: "new"
+                }]
 
                 expect(@client).to receive(:query).with(mock).and_return(stub)
 
                 post = Post.find_all_post_with_certain_tag('new')
-
                 expect(post).to be_an Enumerator
             end
         end
