@@ -23,6 +23,26 @@ RSpec.describe Comment do
                 expect(@comment.save).to eq("Successfully commented")
             end
         end
+        context "get post_id" do
+            it "should return data size" do
+                mock = "SELECT id FROM posts WHERE id = '22' "
+                stub = [{id: 22}]
+
+                expect(@client).to receive(:query).with(mock).and_return(stub)
+
+                model = @comment.get_post_id
+
+                expect(model).to eq(1)
+            end
+            it "raises" do
+                mock = "SELECT id FROM posts WHERE id = '22' "
+                stub = []
+
+                expect(@client).to receive(:query).with(mock).and_return(stub)
+
+                expect { @comment.save }.to raise_error(RuntimeError)
+            end
+        end
     end
 
     describe "param validation" do
