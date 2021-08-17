@@ -71,14 +71,42 @@ export DB_PASS=your-password
 source .env
 ```
 
-7. Run the app with this command :
+7. Create folders for attachment :
+```sh
+mkdir -p public/uploads/posts
+mkdir -p public/uploads/comments
+```
+
+8. Run the app with this command :
 
 ```sh
 ruby app.rb
 ```
 
-8. Access the App from your browser :
+9. Access the App from your browser :
 
 ```sh
 http://localhost:4567
 ```
+
+# How to run test suite
+
+You can check this <a href="https://relishapp.com/rspec/docs/gettingstarted">Link</a> for installing `rspec` to your system. Or if you follow the steps above, then you are ready to run the test.
+
+## Running Specs
+
+```sh
+# open your terminal and change directory to app folder
+cd rbsm
+# run unit test for all
+rspec spec/
+# run unit test for model/controller only
+rspec spec/model
+# run unit test for spesific file (in case for post model)
+rspec spec/model/post.rb
+# run unit test for spesific file (by line)
+rspec spec/model/post.rb:10
+```
+
+## Code Coverage
+You can check the result of test coverage by visiting `index.html` in Code Coverage Directory
