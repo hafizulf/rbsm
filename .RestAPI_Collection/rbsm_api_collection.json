@@ -1,0 +1,204 @@
+{
+    "info": {
+        "_postman_id": "99d3313a-95ac-4ba0-96db-1b882e8d1c56",
+        "name": "rbsm - endpoint collection",
+        "description": "Endpoint collection of RBSM : https://github.com/hafizulf/rbsm",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GET",
+            "item": [
+                {
+                    "name": "Get All Users",
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "id": "a1811dda-d997-45e4-bcf0-3a520fc71576",
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "4234fd6f-9bd2-4699-80d2-c340be882484",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://34.80.38.124:4567/user",
+                        "description": "Retrieve all users data"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET All Post with Certain Hashtag",
+                    "id": "17bf786d-50eb-4680-964d-1ca4a26a145a",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://34.80.38.124:4567/post/{param}",
+                        "description": "Give a param as hashtag that you want to find the post"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET Trending Hashtag in The Last 24 Hours",
+                    "id": "79b0d1f6-a3ab-4b26-852e-391b3226fda8",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://34.80.38.124:4567/trend",
+                        "description": "Retrieve 5 most posted hashtag in the past 24 hours"
+                    },
+                    "response": []
+                }
+            ],
+            "id": "f7dfa703-abaf-42d7-85a3-86aaf167b5a3",
+            "description": "Group of get request"
+        },
+        {
+            "name": "POST",
+            "item": [
+                {
+                    "name": "Save User",
+                    "id": "5e9552cd-9dfe-43e3-b061-95b5d0a8ca0c",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "username",
+                                    "value": "skuyngoding",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "skuy@ex.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "bio_desc",
+                                    "value": "Hi there!",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": "http://34.80.38.124:4567/user",
+                        "description": "send at least username in form body to save user data"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Save Post",
+                    "id": "ea61c7ae-2f21-4a6c-a826-056991eaa9f6",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "message",
+                                    "value": "new Lorem ipsum dolor amet. #new #2021",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": "http://34.80.38.124:4567/post",
+                        "description": "send params (message) in form body to save created post"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Save Comment",
+                    "id": "a6b94906-e31a-4aef-8ead-bbb7f64174d6",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "post_id",
+                                    "value": "5",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "comment",
+                                    "value": "#comment new comment.",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://34.80.38.124:4567/comment",
+                            "protocol": "http",
+                            "host": [
+                                "34",
+                                "80",
+                                "38",
+                                "124"
+                            ],
+                            "port": "4567",
+                            "path": [
+                                "comment"
+                            ],
+                            "query": [
+                                {
+                                    "key": "",
+                                    "value": "",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "",
+                                    "value": null,
+                                    "disabled": true
+                                }
+                            ]
+                        },
+                        "description": "send params (post_id should related to existing post) to save comment on a post"
+                    },
+                    "response": []
+                }
+            ],
+            "id": "316734b3-d270-4713-85f7-b9d6434b58d0",
+            "description": "Group of Post Request"
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "id": "71049746-4f0f-4308-8283-ef24bcbbff6a",
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "id": "11e4c456-27ca-4712-94d9-d25c15e2f7c5",
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ]
+}
