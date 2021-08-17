@@ -4,6 +4,8 @@
 
 RBSM is a simple social media API-only application based on Ruby lang. This app is used only on one small environment so no authentication is required. Where the user can input data, create a new post with a limit of 1000 characters and a maximum of one attachment. Users can also make comments, check some posts that contain certain hashtags and users can also see trending hashtags for the past 24 hours.
 
+### See API Collection <a href="https://github.com/hafizulf/rbsm/tree/main/.RestAPI_Collection" target="_blank">here</a>
+
 # Prerequisites to run the application locally
 
 There are several things that need to be prepared to run this application locally, including:
