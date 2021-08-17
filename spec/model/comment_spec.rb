@@ -14,6 +14,7 @@ RSpec.describe Comment do
                 mock2 = "INSERT INTO tags(post_id, tag) VALUES('22', 'new') "
 
                 allow(@client).to receive(:new).and_return(post_id: 22, comment: 'new post #new')
+                allow(@comment).to receive(:get_post_id).and_return(1)
                 expect(@client).to receive(:query).with(mock)
 
                 allow(@client).to receive(:last_id).and_return(22)

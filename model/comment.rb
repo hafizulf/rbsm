@@ -11,11 +11,22 @@ class Comment
         @attachment = AttachmentHelper.new
     end
 
+    def get_post_id
+        client = create_db_client
+        rawData = client.query("SELECT id FROM posts WHERE id = '#{post_id}' ")
+        rawData.size
+    end
+
     def save
         return false unless valid?
         return chars_length_err unless comment_valid?
 
         attachment = @attachment.get_file(@file, "comments")
+
+        # if returned 0 data
+        if get_post_id < 1
+            raise "Post you want to comment not found"
+        end
 
         client = create_db_client
         client.query("INSERT INTO comments(post_id, comment, attachment) VALUES('#{post_id}', '#{comment}', '#{attachment}') ")

@@ -14,14 +14,6 @@ class User
         client = create_db_client
         rawData = client.query("SELECT * FROM users")
         rawData.each
-        # users = Array.new
-        # rawData.each do | data |
-        #     user = User.new({
-        #             :username => data['username'], :email => data['email'], :bio_desc => data['bio_desc']
-        #         })
-        #     users.push(user)
-        # end
-        # users
     end
 
     def save
@@ -39,6 +31,6 @@ class User
     end
 
     def bad_request
-        raise "invalid param"
+        raise "Please provide a username"
     end
 end
