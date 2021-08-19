@@ -1,16 +1,18 @@
 require_relative '../../controller/CommentController'
 
 RSpec.describe CommentController do
-    describe "save comment" do
-        it "should call save method" do
-            stub = double
 
-            allow(Comment).to receive(:new).with([]).and_return(stub)
+  describe "save comment" do
+    it "should call save method" do
+      stub = double
 
-            expect(stub).to receive(:save)
+      allow(Comment).to receive(:new).with([]).and_return(stub)
 
-            controller = CommentController.new
-            controller.save_comment([])
-        end
+      expect(stub).to receive(:save)
+
+      controller = CommentController.new
+      controller.save_comment([])
     end
+  end
+
 end

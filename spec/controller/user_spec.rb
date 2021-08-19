@@ -1,24 +1,24 @@
 require_relative "../../controller/UserController"
 
 RSpec.describe UserController do
-    before(:each) do
-        @controller =  UserController.new
-        @stub = double
-    end
 
-    it 'should call find_all method' do
-        expect(User).to receive(:find_all).and_return(@stub)
+  before(:each) do
+    @controller =  UserController.new
+    @stub = double
+  end
 
-        @controller.find_all
-    end
+  it 'should call find_all method' do
+    expect(User).to receive(:find_all).and_return(@stub)
 
-    it 'should call save method' do
-        allow(User).to receive(:new).with([]).and_return(@stub)
+    @controller.find_all
+  end
 
-        expect(@stub).to receive(:save)
+  it 'should call save method' do
+    allow(User).to receive(:new).with([]).and_return(@stub)
 
-        @controller.save([])
-    end
+    expect(@stub).to receive(:save)
 
+    @controller.save([])
+  end
 
 end
