@@ -35,6 +35,12 @@ Provide message to create a new post.
 
 **Code** : `200 OK`
 
+**Content example**
+
+```json
+    "Post created successfully"
+```
+
 ## Error Responses
 
 **Condition** : If message field is empty or out of max characters.

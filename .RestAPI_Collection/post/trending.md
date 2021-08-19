@@ -1,6 +1,6 @@
 # Show Trending Hashtags in The Last 24 Hours
 
-Retrieve all users data.
+Retrieve 5 trending hashtags in The Last 24 Hours.
 
 **URL** : `/trend/`
 

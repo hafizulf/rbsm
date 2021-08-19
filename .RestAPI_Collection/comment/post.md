@@ -40,6 +40,12 @@ Note.
 
 ## Error Responses
 
+**Content example**
+
+```json
+    "Successfully commented"
+```
+
 **Condition** : If **post_id** doesn't related with exist post.
 
 **Code** : `400 BAD REQUEST`
