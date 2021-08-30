@@ -1,7 +1,8 @@
-require_relative "../model/post"
+# frozen_string_literal: true
+
+require_relative '../model/post'
 
 class PostController
-
   def save(params)
     post = Post.new(params)
     post.save
@@ -14,5 +15,4 @@ class PostController
   def post_with_most_posted_tag
     Post.find_all_post_with_most_posted_tag
   end
-
 end

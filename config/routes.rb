@@ -1,6 +1,8 @@
-require './controller/UserController'
-require './controller/PostController'
-require './controller/CommentController'
+# frozen_string_literal: true
+
+require './controller/user_controller'
+require './controller/post_controller'
+require './controller/comment_controller'
 
 # user
 get '/user' do

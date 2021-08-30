@@ -1,0 +1,8 @@
+Style/Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']
+Metrics/MethodLength:
+  Enabled: false
+Layout/LineLength:
+  Enabled: false

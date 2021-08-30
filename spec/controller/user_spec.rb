@@ -1,9 +1,10 @@
-require_relative "../../controller/UserController"
+# frozen_string_literal: true
+
+require_relative '../../controller/user_controller'
 
 RSpec.describe UserController do
-
   before(:each) do
-    @controller =  UserController.new
+    @controller = UserController.new
     @stub = double
   end
 
@@ -20,5 +21,4 @@ RSpec.describe UserController do
 
     @controller.save([])
   end
-
 end
